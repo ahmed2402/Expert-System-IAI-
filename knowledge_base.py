@@ -161,7 +161,7 @@ RULES = [
     # Layer 3: attack + context -> extra actions
     R("R62", ["ctx_banking"], "act_call_bank", 0.95, if_any=ACCOUNT + ["attack_trojan"], because="Money could be at risk."),
     R("R63", ["ctx_spread"], "act_isolate_network", 0.90, if_any=MALWARE, because="Malware may be spreading across devices."),
-    R("R64", ["ctx_business"], "act_inform_it", 0.90, if_any=MALWARE + ACCOUNT + ["attack_mitm", "attack_data_breach"], because="Company incidents need the IT/security team."),
+    R("R64", ["ctx_business"], "act_inform_it", 0.90, if_any=list(dict.fromkeys(MALWARE + ACCOUNT + ["attack_mitm", "attack_data_breach"])), because="Company incidents need the IT/security team."),
     R("R65", [], "act_change_passwords", 0.90, if_any=["attack_account_takeover", "attack_phishing", "attack_data_breach", "attack_spyware", "attack_social_hijack", "attack_mitm"], because="Some passwords should be treated as known to the attacker."),
     R("R66", [], "act_report_nccia", 0.80, if_any=["attack_ransomware", "attack_bec", "attack_sim_swap", "attack_account_takeover", "attack_tech_support_scam"], because="This is a reportable cybercrime."),
     R("R67", [], "act_disconnect", 0.90, if_any=MALWARE, because="Cutting the connection stops data leaving and malware spreading."),
